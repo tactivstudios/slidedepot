@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Logo from "../../../assets/images/slide-depot.png";
+import Logo from "@/assets/images/slide-depot.png";
 
 function Navbar() {
   const navigate = useNavigate();

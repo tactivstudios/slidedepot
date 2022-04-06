@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../Guest/Navbar/Navbar";
+import Navbar from "@/components/Guest/Navbar/Navbar";
 
 function Signup() {
   return (
