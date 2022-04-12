@@ -18,6 +18,8 @@ function Signup() {
           </span>
         </p>
         <div className="flex flex-col">
+        <h1 className="my-1 font-semibold text-sm">User Name</h1>
+          <input className="form-input" type="text" placeholder="User Name" />
           <h1 className="my-1 font-semibold text-sm">First Name</h1>
           <input className="form-input" type="text" placeholder="First Name" />
           <h1 className="my-1 font-semibold text-sm">Last Name</h1>
