@@ -4,7 +4,10 @@ import axios from "axios";
 function UploadPresentation() {
   const [id, setID] = useState("");
   const [file, setFile] = useState(null);
+
   const [thumbnail_image, setThumbnailImage] = useState(null);
+  const [tbnl_preview, setTbnlPreview] = useState(null);
+
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState([]);
   const [slctdCategory, setSlctdCategory] = useState("");
@@ -57,8 +60,28 @@ function UploadPresentation() {
   function onChangeFile(e) {
     setFile(e.target.files[0]);
   }
-  function onChangeThumbnailImage(e) {
-    setThumbnailImage(e.target.files[0]);
+  async function onChangeThumbnailImage(e) {
+    if (e.target.files[0]) {
+      setThumbnailImage(e.target.files[0]);
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setTbnlPreview(reader.result);
+      });
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    document.getElementById("thumbnail_view").style.display = "block";
+    document.getElementById("upload_button").style.display = "none";
+    document.getElementById("delete_thumbnail").style.display = "block";
+  }
+
+  function delete_thumbnail(e) {
+    e.preventDefault();
+    setThumbnailImage("");
+    setTbnlPreview("");
+    document.getElementById("thumbnail_view").style.display = "none";
+    document.getElementById("upload_button").style.display = "flex";
+    document.getElementById("delete_thumbnail").style.display = "none";
+    document.getElementById("thumbnail_image").value = null;
   }
 
   function onSubmit(e) {
@@ -127,6 +150,7 @@ function UploadPresentation() {
               <div className="relative">
                 <img
                   className="w-full aspect-video"
+                  src={tbnl_preview}
                   alt="thumbnail_view"
                   id="thumbnail_view"
                   hidden={true}
@@ -141,7 +165,6 @@ function UploadPresentation() {
                   id="thumbnail_image"
                   name="thumbnail_image"
                   onChange={onChangeThumbnailImage}
-                  accept="image/png, image/jpeg"
                 />
                 <span className="static text-white text-sm font-medium leading-5 not-italic">
                   Upload
@@ -150,6 +173,7 @@ function UploadPresentation() {
               <button
                 id="delete_thumbnail"
                 className="flex flex-row bg-purple-900 border-0 rounded-md shadow-sm justify-center items-center w-full my-5 py-2 cursor-pointer outline-none"
+                onClick={delete_thumbnail}
                 hidden={true}>
                 <span className="static text-white text-sm font-medium leading-5 not-italic">
                   Delete thumbnail
