@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer components {
   .btn {
     @apply py-2 px-6 rounded-sm;
@@ -21,9 +21,10 @@
 }
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -38,4 +39,26 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+select:required:invalid {
+  color: #c4c4c4;
+}
+
+option[value=""][disabled] {
+  display: none;
+}
+
+option {
+  color: black;
+}
+
+label.thumbnail input[type="file"] {
+  position: absolute;
+  top: -1000px;
+}
+
+label.setfiles input[type="file"] {
+  position: absolute;
+  top: -1000px;
 }
