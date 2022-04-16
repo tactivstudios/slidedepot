@@ -3,11 +3,13 @@ from .serializers import (
     UserSerializer,
     CategorySerializer,
     PresentationSerializer,
+    CommentSerializer
 )
 from .models import (
     Article,
     Category,
     Presentation,
+    Comment
 )
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
@@ -63,3 +65,21 @@ class PresentationView(APIView):
         else:
             print('ERROR', presentation_serializer.errors)
             return Response(presentation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Comment
+class CommentView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        comment = Comment.objects.all()
+        serializer = CommentSerializer(comment, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        comment_serializer = CommentSerializer(data=request.data)
+        if comment_serializer.is_valid():
+            comment_serializer.save()
+            return Response(comment_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('ERROR', comment_serializer.errors)
+            return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

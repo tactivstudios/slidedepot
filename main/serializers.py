@@ -1,4 +1,5 @@
 import email
+
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
@@ -6,6 +7,7 @@ from .models import (
     Article,
     Category,
     Presentation,
+    Comment
 )
 
 
@@ -42,3 +44,8 @@ class PresentationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Presentation
         fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('commenter_name', 'comment_body')

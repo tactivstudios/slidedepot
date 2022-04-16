@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     ArticleViewSet,
+    CommentView,
     UserViewSet,
     CategoryView,
     PresentationView,
@@ -20,4 +21,5 @@ urlpatterns = [
     # path('articles/<int:pk>', article_details),
     path('upload-presentation/', PresentationView.as_view(),name='upload-presentation'),
     path('category/', CategoryView.as_view(), name='category'),
+    path('comment/', CommentView.as_view(), name='comment')
 ]
