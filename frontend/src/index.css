@@ -62,3 +62,8 @@ label.setfiles input[type="file"] {
   position: absolute;
   top: -1000px;
 }
+
+.nav-tabs .nav-link.active {
+  color: #4c1d95;
+  border-color: #4c1d95;
+}
