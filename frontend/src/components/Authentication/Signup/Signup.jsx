@@ -1,7 +1,10 @@
 import React from "react";
 import Navbar from "@/components/Guest/Navbar/Navbar";
+import {Link} from 'react-router-dom';
+
 
 function Signup() {
+
   return (
     <div className="w-screen h-screen grid place-items-center font-Inter">
       <Navbar />
@@ -10,12 +13,11 @@ function Signup() {
         <h1 className="text-3xl font-semibold mb-2">Sign Up</h1>
         <p className="mb-5">
           Already have an Account?{" "}
-          <span
-            className="font-thin-600 underline cursor-pointer text-purple-800"
-            onClick={() => navigate("/login")}
-          >
-            Sign in
-          </span>
+          <Link to="/">
+            <span className="font-thin-600 underline cursor-pointer text-purple-800">
+              Sign in
+            </span>
+          </Link>        
         </p>
         <div className="flex flex-col">
         <h1 className="my-1 font-semibold text-sm">User Name</h1>
