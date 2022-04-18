@@ -1,48 +1,104 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "@/components/Guest/Navbar/Navbar";
+import {useRef, useState, useEffect, useContext} from 'react';
+import AuthContext from "@/context/AuthProvider";
 
-function Login() {
+import axios from "@/APIService/axios";
+const LOGIN_URL = 'http://127.0.0.1:8000/auth/';
+
+const Login = () => {
   const navigate = useNavigate();
+  
+  const { setAuth } = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, [])
+
+  useEffect(() => {
+    setErrMsg('');
+  }, [user, password])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(user, password);
+    try{
+      const response = await axios.post(LOGIN_URL, 
+            JSON.stringify({username: user, password: password}), 
+            {
+              headers: {'Content-Type': 'application/json'},
+              withCredentials: false
+            }
+          );
+          console.log(JSON.stringify(response?.data));
+          // console.log(JSON.stringify(response));
+          const Token = response?.data?.Token;
+          setAuth({username, password, Token});
+          setUser('');
+          setPassword('');
+          setSuccess(true);
+    }catch(err){
+      if(!err?.response){
+        setErrMsg('No server Response');
+      }else if (err.response?.status === 400){
+        setErrMsg('Missing Username or Password');
+      }else if (err.response?.status === 401){
+        setErrMsg('Unauthorized');
+      }else {
+        setErrMsg('Login Failed');
+      }
+      errRef.current.focus();
+    }
+
+  }
 
   return (
-    <div className="w-screen h-screen grid place-items-center font-font">
-      <Navbar />
-      {/* Login */}
-      <form className="w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md">
-        <h1 className="text-3xl font-semibold mb-2">Log in</h1>
-        <p className="mb-5">
-          Don't have an account?{" "}
-          <span
-            className="font-thin-600 underline cursor-pointer text-purple-800"
-            onClick={() => navigate("/signup")}
-          >
-            Sign up
-          </span>
-        </p>
-        <div className="flex flex-col">
-          <h1 className="my-1 font-semibold text-sm">Email Address</h1>
-          <input className="form-input " type="text" placeholder="Email" />
-          <h1 className="my-1 font-semibold text-sm">Password</h1>
-          <input
-            className="form-input"
-            type="password"
-            placeholder="Password"
-          />
-          <div className="flex items-center mt-3">
-            <input type="checkbox" />
-            <h1 className="mx-1 font-semibold text-sm">Remember me</h1>
-          </div>
-          <button
-            className="btn btn-block btn-default mt-5"
-            onClick={() => navigate("/landing")}
-          >
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+      <>
+          {success ? (
+            <section>
+              <h1>You are Logged in!</h1>
+            </section>
+         ) : (
+            <section>
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <h1>Log In</h1>
+                <p>
+                  Don't have an account?
+                  <span onClick={() => navigate("/signup/")}>Sign up</span>
+                </p>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">Username</label>
+                    <input 
+                      type="text" 
+                      id="username"
+                      ref={userRef}
+                      autoComplete="off" 
+                      onChange={(e) => setUser(e.target.value)}
+                      value={user}
+                      required
+                    />
+
+                    <label htmlFor="password">Password</label>
+                    <input 
+                      type="password" 
+                      id="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                      required
+                    />
+                    <button>Log In</button>
+                </form>
+            </section>
+         )}
+    </>
+  )
 }
 
 export default Login;
