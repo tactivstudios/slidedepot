@@ -62,11 +62,11 @@ const Login = () => {
   return (
       <>
           {success ? (
-            <section>
+            <div>
               <h1>You are Logged in!</h1>
-            </section>
+            </div>
          ) : (
-            <section>
+            <div>
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <h1>Log In</h1>
                 <p>
@@ -95,7 +95,7 @@ const Login = () => {
                     />
                     <button>Log In</button>
                 </form>
-            </section>
+            </div>
          )}
     </>
   )
