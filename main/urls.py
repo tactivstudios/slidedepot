@@ -1,16 +1,16 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    ArticleViewSet,
-    UserViewSet,
+    # ArticleViewSet,
+    # UserViewSet,
     CategoryView,
     PresentationView,
 )
 
 
 router = DefaultRouter()
-router.register('articles', ArticleViewSet, basename='articles')
-router.register('users', UserViewSet)
+# router.register('articles', ArticleViewSet, basename='articles')
+# router.register('users', UserViewSet)
 
 
 urlpatterns = [

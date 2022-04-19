@@ -1,11 +1,11 @@
 from .serializers import (
-    ArticleSerializers,
-    UserSerializer,
+    # ArticleSerializers,
+    # UserSerializer,
     CategorySerializer,
     PresentationSerializer,
 )
 from .models import (
-    Article,
+    # Article,
     Category,
     Presentation,
 )
@@ -26,16 +26,16 @@ from rest_framework import status
 # Get_post
 # @csrf_exempt
 
-class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializers
-    permission_classes = [IsAuthenticated]
-    authentication_classes = (TokenAuthentication)
+# class ArticleViewSet(viewsets.ModelViewSet):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializers
+#     permission_classes = [IsAuthenticated]
+#     authentication_classes = (TokenAuthentication)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 
 class CategoryView(APIView):
