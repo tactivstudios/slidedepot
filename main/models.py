@@ -1,3 +1,5 @@
+from datetime import datetime
+from lib2to3.pgen2 import token
 from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -53,13 +55,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         USERNAME_FIELD = 'email'
         REQUIRED_FIELDS = ['first_name', 'last_name', 'password']
 
+        def get_token(self):
+            token, created = Token.objects.get_or_create(user=self)
+            expiry_date = token.created + datetime.timedelta(
+                days=settings.AUTH_TOKEN_EXPIRY_TIME)
+
+            if not created and expiry_date < timezone.now():
+
+                token.delete()
+                token = Token.objects.create(user=self)
+
+            return token
         class Meta:
             verbose_name = 'User'
             verbose_name_plural = 'Users'
-        @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-        def create_auth_token(sender, instance=None, create=False, **kwargs):
-            if create:
-                Token.objects.create(user=instance)
 
 class Category(models.Model):
     class Meta:
