@@ -3,6 +3,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
 # Create your models here.
 class CustomeUserManager(BaseUserManager):
     def _create_user(self, email, password, first_name, last_name, **extra_fields):
@@ -51,7 +56,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         class Meta:
             verbose_name = 'User'
             verbose_name_plural = 'Users'
-
+        @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+        def create_auth_token(sender, instance=None, create=False, **kwargs):
+            if create:
+                Token.objects.create(user=instance)
 
 class Category(models.Model):
     class Meta:
