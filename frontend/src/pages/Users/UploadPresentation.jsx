@@ -131,10 +131,18 @@ function UploadPresentation() {
                 name="set_file"
                 onChange={onChangeFile}
               />
-              <span className="absolute text-gray-300 text-base font-normal text-center">
-                Drag and Drop file <br /> or <br />
-                <span className="text-purple-900 hover:underline">Browse</span>
-              </span>
+              {file === null ? (
+                <span className="absolute text-gray-300 text-base font-normal text-center">
+                  Drag and Drop file <br /> or <br />
+                  <span className="text-purple-900 hover:underline">
+                    Browse
+                  </span>
+                </span>
+              ) : (
+                <span className="text-purple-900 hover:underline">
+                  Re-upload
+                </span>
+              )}
             </label>
           </div>
           <div className="relative w-full my-7">
