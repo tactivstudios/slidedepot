@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
@@ -43,15 +44,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         objects = CustomeUserManager()
 
+        username = None
         USERNAME_FIELD = 'email'
-        REQUIRED_FIELDS = 'first_name', 'last_name', 'password'
+        REQUIRED_FIELDS = ['first_name', 'last_name', 'password']
 
-# class Article(models.Model):
-#     title = models.CharField(max_length=100)
-#     description = models.TextField()
-
-#     def __str__(self):
-#         return self.title
+        class Meta:
+            verbose_name = 'User'
+            verbose_name_plural = 'Users'
 
 
 class Category(models.Model):
