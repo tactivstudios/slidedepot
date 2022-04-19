@@ -34,7 +34,7 @@ const Login = () => {
             JSON.stringify({username: user, password: password}), 
             {
               headers: {'Content-Type': 'application/json'},
-              withCredentials: false
+              withCredentials: true
             }
           );
           console.log(JSON.stringify(response?.data));
@@ -48,7 +48,7 @@ const Login = () => {
       if(!err?.response){
         setErrMsg('No server Response');
       }else if (err.response?.status === 400){
-        setErrMsg('Missing Username or Password');
+        setErrMsg('Unable to log in with provided credentials.');
       }else if (err.response?.status === 401){
         setErrMsg('Unauthorized');
       }else {
@@ -56,7 +56,6 @@ const Login = () => {
       }
       errRef.current.focus();
     }
-
   }
 
   return (
@@ -74,7 +73,7 @@ const Login = () => {
                   <span onClick={() => navigate("/signup/")}>Sign up</span>
                 </p>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Email</label>
                     <input 
                       type="text" 
                       id="username"
