@@ -74,7 +74,7 @@ const Login = () => {
                   <span onClick={() => navigate("/signup/")}>Sign up</span>
                 </p>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Email</label>
                     <input 
                       type="text" 
                       id="username"
