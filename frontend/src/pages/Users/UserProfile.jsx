@@ -23,6 +23,41 @@ class UserProfile extends Component {
       .catch((error) => console.log(error));
   }
 
+  getCard() {
+    return this.state.presentation.map((item) => (
+      <PresentationCard key={item.id} item={item} />
+    ));
+  }
+
+  displayData() {
+    if (this.getCard().length > 0) {
+      return this.getCard();
+    } else {
+      return (
+        <div className="grid grid-cols-4 gap-11">
+          <div className="w-64 h-64 bg-white border border-black border-dashed box-border rounded-lg">
+            <div className="text-black text-center p-5">
+              <span className="not-italic font-bold text-lg">
+                Upload your first presentation
+              </span>
+              <p className="not-italic font-normal text-sm items-center">
+                Share your presentation. Get feedback and be part of the growing
+                community!
+              </p>
+              <button
+                className="static bg-purple-900 border-0 rounded-md shadow-sm px-3 py-2 justify-center items-center text-center"
+                type="button">
+                <span className="static text-white text-sm font-medium not-italic">
+                  Upload
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
   componentDidMount() {
     this.getPresentation();
   }
@@ -95,20 +130,7 @@ class UserProfile extends Component {
             id="tabs-mySlides"
             role="tabpanel"
             aria-labelledby="tabs-home-tabFill">
-            <div className="grid grid-cols-4 gap-11 border-2">
-              <div className="border border-black border-dashed box-border rounded-lg p-5">
-                <div className="px-6 py-4">
-                  <p className="text-gray-700 text-base">
-                    sample name sample name
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-4 gap-11">
-              {this.state.presentation.map((item) => (
-                <PresentationCard key={item.id} item={item} />
-              ))}
-            </div>
+            <div className="grid grid-cols-4 gap-11">{this.displayData()}</div>
           </div>
           <div
             className="tab-pane fade"
