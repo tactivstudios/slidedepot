@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'main.apps.MainConfig',
+    'presentation.apps.PresentationConfig',
 ]
 
 REST_FRAMEWORK = {
