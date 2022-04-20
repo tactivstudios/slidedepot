@@ -1,7 +1,14 @@
+from datetime import datetime
+from lib2to3.pgen2 import token
+from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 # Create your models here.
 class CustomeUserManager(BaseUserManager):
     def _create_user(self, email, password, first_name, last_name, **extra_fields):
@@ -46,7 +53,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         USERNAME_FIELD = 'email'
         REQUIRED_FIELDS = 'first_name', 'last_name', 'password'
 
+        def get_token(self):
+            token, created = Token.objects.get_or_create(user=self)
+            expiry_date = token.created + datetime.timedelta(
+                days=settings.AUTH_TOKEN_EXPIRY_TIME)
 
+            if not created and expiry_date < timezone.now():
+
+                token.delete()
+                token = Token.objects.create(user=self)
+
+            return token
+        class Meta:
+            verbose_name = 'User'
+            verbose_name_plural = 'Users'
 class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
