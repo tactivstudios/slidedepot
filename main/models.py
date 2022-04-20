@@ -1,5 +1,4 @@
 from datetime import datetime
-from lib2to3.pgen2 import token
 from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
@@ -9,6 +8,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+
+
 # Create your models here.
 class CustomeUserManager(BaseUserManager):
     def _create_user(self, email, password, first_name, last_name, **extra_fields):
