@@ -33,7 +33,7 @@ function UploadPresentation() {
 
     // API
     axios
-      .get("http://localhost:8000/category/")
+      .get("http://127.0.0.1:8000/category/")
       .then((res) => {
         let categories = [];
 
@@ -96,7 +96,7 @@ function UploadPresentation() {
     presentation_data.append("category", slctdCategory);
 
     axios
-      .post("http://localhost:8000/upload-presentation/", presentation_data, {
+      .post("http://127.0.0.1:8000/upload-presentation/", presentation_data, {
         headers: {
           "content-type": "multipart/form-data",
         },

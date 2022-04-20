@@ -14,7 +14,7 @@ class UserProfile extends Component {
 
   getPresentation() {
     axios
-      .get(`http://localhost:8000/upload-presentation/`)
+      .get(`http://127.0.0.1:8000/upload-presentation/`)
       .then((res) =>
         this.setState({
           presentation: res.data,
@@ -95,6 +95,15 @@ class UserProfile extends Component {
             id="tabs-mySlides"
             role="tabpanel"
             aria-labelledby="tabs-home-tabFill">
+            <div className="grid grid-cols-4 gap-11 border-2">
+              <div className="border border-black border-dashed box-border rounded-lg p-5">
+                <div className="px-6 py-4">
+                  <p className="text-gray-700 text-base">
+                    sample name sample name
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="grid grid-cols-4 gap-11">
               {this.state.presentation.map((item) => (
                 <PresentationCard key={item.id} item={item} />
