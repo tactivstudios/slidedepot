@@ -1,19 +1,23 @@
 from rest_framework import serializers
 from .models import (
-    Category,
-    Presentation,
+    User,
     Comment
 )
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = '__all__'
+class UserSerializer(serializers.ModelSerializer):
 
-class PresentationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Presentation
-        fields = '__all__'
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'password']
+
+        extra_kwargs = {'password' : {
+            'write_only' : True,
+            'required': True
+        }}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
