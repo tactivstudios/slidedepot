@@ -95,7 +95,7 @@ class UserProfile extends Component {
             id="tabs-mySlides"
             role="tabpanel"
             aria-labelledby="tabs-home-tabFill">
-            <div>
+            <div className="grid grid-cols-4 gap-11">
               {this.state.presentation.map((item) => (
                 <PresentationCard key={item.id} item={item} />
               ))}
