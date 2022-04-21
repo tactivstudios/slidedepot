@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "tw-elements";
 import PresentationCard from "@/components/Users/PresentationCard";
+import UploadPresentation from "@/pages/Users/UploadPresentation";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class UserProfile extends Component {
 
     this.state = {
       presentation: [],
+      showModal: false,
     };
   }
 
@@ -46,11 +48,17 @@ class UserProfile extends Component {
               </p>
               <button
                 className="static bg-purple-900 border-0 rounded-md shadow-sm px-3 py-2 justify-center items-center text-center"
-                type="button">
+                type="button"
+                onClick={() => this.setState({ showModal: true })}>
                 <span className="static text-white text-sm font-medium not-italic">
                   Upload
                 </span>
               </button>
+              {this.state.showModal && (
+                <UploadPresentation
+                  closeModal={() => this.setState({ showModal: false })}
+                />
+              )}
             </div>
           </div>
         </div>
