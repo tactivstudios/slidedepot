@@ -4,10 +4,8 @@ import axios from "axios";
 function UploadPresentation() {
   const [id, setID] = useState("");
   const [file, setFile] = useState(null);
-
   const [thumbnail_image, setThumbnailImage] = useState(null);
   const [tbnl_preview, setTbnlPreview] = useState(null);
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState([]);
   const [slctdCategory, setSlctdCategory] = useState("");
@@ -60,7 +58,7 @@ function UploadPresentation() {
   function onChangeFile(e) {
     setFile(e.target.files[0]);
   }
-  async function onChangeThumbnailImage(e) {
+  function onChangeThumbnailImage(e) {
     if (e.target.files[0]) {
       setThumbnailImage(e.target.files[0]);
       const reader = new FileReader();
