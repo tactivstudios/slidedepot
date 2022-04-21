@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function UploadPresentation() {
+function UploadPresentation({ closeModal }) {
   const [id, setID] = useState("");
   const [file, setFile] = useState(null);
   const [thumbnail_image, setThumbnailImage] = useState(null);
@@ -108,7 +108,7 @@ function UploadPresentation() {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="absolute w-full h-screen flex items-center justify-center">
       <div className="flex flex-col bg-white border rounded-lg shadow-xl w-2/6 p-8">
         <div className="relative w-full mb-20">
           <div className="static text-black text-2xl font-normal not-italic mb-2">
@@ -233,7 +233,8 @@ function UploadPresentation() {
           <div className="relative flex w-full items-end justify-end">
             <button
               className="static flex-row bg-gray-200 border-0 rounded-md mr-2 px-5 py-2 justify-center items-center text-center"
-              type="button">
+              type="button"
+              onClick={() => closeModal(false)}>
               <span className="static text-black text-sm font-normal leading-5 not-italic">
                 Cancel
               </span>
