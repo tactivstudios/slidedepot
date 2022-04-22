@@ -6,18 +6,15 @@ from .models import (
     Category,
     Presentation,
 )
-
-# For Upload Presentation
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
+
 
 # Create your views here.
 
 
 class CategoryView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, *args, **kwargs):
         category = Category.objects.all()
@@ -26,12 +23,11 @@ class CategoryView(APIView):
 
 
 class PresentationView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
     serializer_class = PresentationSerializer
 
     def get(self, request, *args, **kwargs):
-        presentations = Presentation.objects.all()
-        serializer = self.serializer_class(presentations, many=True)
+        presentation = Presentation.objects.all()
+        serializer = self.serializer_class(presentation, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
