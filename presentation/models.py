@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 # Create your models here.
 
@@ -17,10 +16,8 @@ class Category(models.Model):
 
 class Presentation(models.Model):
     id = models.CharField(primary_key=True, max_length=200, unique=True)
-    file = models.FileField(
-        default=timezone.now, upload_to='save_file', null=False, blank=False)
-    thumbnail_image = models.ImageField(
-        default=timezone.now, upload_to='thumbnail_images', null=False, blank=False)
+    file = models.FileField(upload_to='save_file', null=True, blank=True)
+    thumbnail_image = models.ImageField(upload_to='thumbnail_images', null=True, blank=True)
     title = models.TextField(null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True)
