@@ -73,6 +73,19 @@ class UserProfile extends Component {
   render() {
     return (
       <div className="container flex flex-col max-h-screen mx-auto px-10">
+        <button
+          className="static bg-purple-900 border-0 rounded-md shadow-sm w-min px-3 py-2 justify-center items-center text-center"
+          type="button"
+          onClick={() => this.setState({ showModal: true })}>
+          <span className="static text-white text-sm font-medium not-italic">
+            Upload
+          </span>
+        </button>
+        {this.state.showModal && (
+          <UploadPresentation
+            closeModal={() => this.setState({ showModal: false })}
+          />
+        )}
         <div className="flex m-10 items-center space-x-5">
           <img
             className="static w-32 h-32 p-0 rounded-full object-cover"
