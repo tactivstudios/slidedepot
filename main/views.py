@@ -1,3 +1,4 @@
+from ast import Delete
 from cgitb import lookup
 from .serializers import (
     UserSerializer,
@@ -12,34 +13,24 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework import status, viewsets, mixins
-
+from django.shortcuts import get_object_or_404
 
 class RegisterViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, 
-                        mixins.CreateModelMixin, mixins.RetrieveModelMixin, 
+                        mixins.CreateModelMixin, mixins.RetrieveModelMixin,
                         mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    
-# class UserDetails(viewsets.ModelViewSet, mixins.RetrieveModelMixin, 
-#                     mixins.UpdateModelMixin, mixins.DestroyModelMixin):
 
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
+class UserAccount(UserSerializer, RegisterViewSet): 
 
-#     lookup_field = 'id'
+    serializer_class = UserSerializer
 
-#     def get(self, request, id):
-#         return self.retrieve(request, id=id)
-
-#     def put(self, request, id):
-#         return self.update(request, id=id)
-    
-#     def delete(self, request,id):
-#         return self.destroy(request, id=id)
-
-
-
-
+    def put(self, request, **kwargs):
+        serializer = self.serializer_class(request.user,request.data,request=request)
+        serializer.is_valid(false_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=200)
     # def list(self, request):
     #     users = User.objects.all()
     #     serializer = UserSerializer(users, many=True)
@@ -50,8 +41,26 @@ class RegisterViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
     #     if serializer.is_valid():
     #         serializer.save()
     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # def retrieve(self, request, pk=None):
+    #     queryset = User.objects.all()
+    #     user = get_object_or_404(queryset, pk=pk)
+    #     serializer = UserSerializer(user)
+    #     return Response(serializer.data)
+
+    # def update(self, request, pk=None):
+    #     user = User.objects.get(pk=pk)
+    #     serializer = UserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+
+    # def destroy(self, request, pk=None):  
+    #     user = User.objects.get(pk=pk)
+    #     user.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Comment
 class CommentView(APIView):
