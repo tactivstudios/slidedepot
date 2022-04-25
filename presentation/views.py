@@ -6,6 +6,7 @@ from .models import (
     Category,
     Presentation,
 )
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,7 +23,7 @@ class CategoryView(APIView):
         return Response(serializer.data)
 
 
-class PresentationView(APIView):
+class PresentationPost(APIView):
     serializer_class = PresentationSerializer
 
     def get(self, request, *args, **kwargs):
@@ -35,3 +36,9 @@ class PresentationView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class PresentationDetail(generics.RetrieveAPIView):
+    lookup_field = "id"
+    queryset = Presentation.objects.all()
+    serializer_class = PresentationSerializer
