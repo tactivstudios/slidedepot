@@ -1,3 +1,4 @@
+from cgitb import lookup
 from .serializers import (
     UserSerializer,
     CommentSerializer
@@ -10,12 +11,34 @@ from rest_framework.decorators import APIView
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, mixins
 
 
-class RegisterViewSet(viewsets.ModelViewSet):
+class RegisterViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, 
+                        mixins.CreateModelMixin, mixins.RetrieveModelMixin, 
+                        mixins.UpdateModelMixin, mixins.DestroyModelMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+# class UserDetails(viewsets.ModelViewSet, mixins.RetrieveModelMixin, 
+#                     mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+#     lookup_field = 'id'
+
+#     def get(self, request, id):
+#         return self.retrieve(request, id=id)
+
+#     def put(self, request, id):
+#         return self.update(request, id=id)
+    
+#     def delete(self, request,id):
+#         return self.destroy(request, id=id)
+
+
+
 
     # def list(self, request):
     #     users = User.objects.all()
