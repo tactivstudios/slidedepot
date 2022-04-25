@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { DownloadIcon, BookmarkIcon } from "@heroicons/react/outline";
 import { useNavigate } from "react-router-dom";
+import Comment from "@/components/Comment/Comment";
 
 const style = {
   position: "absolute",
@@ -78,6 +79,7 @@ function GalleryCard({ image, title, firstname, lastname, avatar }) {
               />
             </div>
           </div>
+          <Comment />
         </Box>
       </Modal>
     </>
