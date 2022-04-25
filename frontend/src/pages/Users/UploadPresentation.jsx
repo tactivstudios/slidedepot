@@ -7,6 +7,7 @@ function UploadPresentation({ closeModal }) {
   const [thumbnail_image, setThumbnailImage] = useState(null);
   const [tbnl_preview, setTbnlPreview] = useState(null);
   const [title, setTitle] = useState("");
+  const [date_posted, setDatePosted] = useState("");
   const [category, setCategory] = useState([]);
   const [slctdCategory, setSlctdCategory] = useState("");
 
@@ -91,6 +92,7 @@ function UploadPresentation({ closeModal }) {
     presentation_data.append("file", file);
     presentation_data.append("thumbnail_image", thumbnail_image);
     presentation_data.append("title", title);
+    presentation_data.append("date_posted", date_posted);
     presentation_data.append("category", slctdCategory);
 
     axios
@@ -105,6 +107,8 @@ function UploadPresentation({ closeModal }) {
       .catch((error) => {
         console.log(error);
       });
+
+    setDatePosted("");
   }
 
   return (
