@@ -11,6 +11,7 @@ class UserProfile extends Component {
     this.state = {
       presentation: [],
       showModal: false,
+      setModalNav: false,
     };
   }
 
@@ -76,14 +77,14 @@ class UserProfile extends Component {
         <button
           className="static bg-purple-900 border-0 rounded-md shadow-sm w-min px-3 py-2 justify-center items-center text-center"
           type="button"
-          onClick={() => this.setState({ showModal: true })}>
+          onClick={() => this.setState({ setModalNav: true })}>
           <span className="static text-white text-sm font-medium not-italic">
             Upload
           </span>
         </button>
-        {this.state.showModal && (
+        {this.state.setModalNav && (
           <UploadPresentation
-            closeModal={() => this.setState({ showModal: false })}
+            closeModal={() => this.setState({ setModalNav: false })}
           />
         )}
         <div className="flex m-10 items-center space-x-5">
