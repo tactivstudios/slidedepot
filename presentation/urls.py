@@ -1,11 +1,13 @@
 from django.urls import path
 from .views import (
     CategoryView,
-    PresentationView,
+    PresentationDetail,
+    PresentationPost,
 )
 
 
 urlpatterns = [
-    path('upload-presentation/', PresentationView.as_view(), name='upload-presentation'),
     path('category/', CategoryView.as_view(), name='category'),
+    path('upload-presentation/', PresentationPost.as_view(), name='upload-presentation'),
+    path('pt-details/<str:id>/', PresentationDetail.as_view(), name='presentation-detail'),
 ]
