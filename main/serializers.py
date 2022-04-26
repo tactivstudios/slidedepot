@@ -3,8 +3,6 @@ from .models import (
     User,
     Comment
 )
-
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -30,11 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
             instance.save()
 
         return instance
-
-class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.CharField(max_length=300, required = True)
-    password = serializers.CharField(required = True, write_only = True)
-
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
