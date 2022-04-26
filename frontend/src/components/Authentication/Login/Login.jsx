@@ -66,35 +66,50 @@ const Login = () => {
   }
 
   return (
-    <div>
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <h1>Log In</h1>
-        <p>
-          Don't have an account?
-          <span onClick={() => navigate("/signup/")}>Sign up</span>
-        </p>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Email</label>
-            <input 
-              type="text" 
-              id="username"
-              ref={userRef}
-              autoComplete="off" 
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-            />
+      <div className="w-screen h-screen grid place-items-center font-font">
+          {success ? (
+            <div>
+              <h1>You are Logged in!</h1>
+            </div>
+         ) : (
+           <div className="w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md">
+              <Navbar />
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                <h1 className="text-3xl font-semibold mb-2">Log In</h1>
+                <p className="mb-5">
+                  Don't have an account?{" "}
+                  <span
+                  className="font-thin-600 underline cursor-pointer text-purple-800"
+                  onClick={() => navigate("/signup/")}>Sign up</span>
+                </p>
+                <form className="flex flex-col" onSubmit={handleSubmit}>
+                    <label className="my-1 font-semibold text-sm" htmlFor="username">Email Address</label>
+                    <input 
+                      className="form-input"
+                      type="text" 
+                      id="username"
+                      placeholder="Email Address"
+                      ref={userRef}
+                      autoComplete="off" 
+                      onChange={(e) => setUser(e.target.value)}
+                      value={user}
+                      required
+                    />
 
-            <label htmlFor="password">Password</label>
-            <input 
-              type="password" 
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
-            <button>Log In</button>
-        </form>
+                    <label className="my-1 font-semibold text-sm" htmlFor="password">Password</label>
+                    <input 
+                      className="form-input"
+                      type="password" 
+                      id="password"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                      required
+                    />
+                    <button className="btn btn-default btn-block mt-5">Log In</button>
+                </form>
+            </div>
+         )}
     </div>
   )
 }
