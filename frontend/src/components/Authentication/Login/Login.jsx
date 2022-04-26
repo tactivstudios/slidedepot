@@ -7,6 +7,7 @@ import axios from "@/APIService/axios";
 const LOGIN_URL = '/auth/';
 
 
+
 const Login = () => {
   const navigate = useNavigate();
   
@@ -27,6 +28,10 @@ const Login = () => {
     setErrMsg('');
   }, [user, password])
 
+  const logout = () =>{
+    localStorage.removeItem(LOGIN_URL);
+    setSuccess(false);
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(user, password);
@@ -65,6 +70,7 @@ const Login = () => {
           {success ? (
             <div>
               <h1>You are Logged in!</h1>
+              <button onClickCapture={logout}>Logout</button>
             </div>
          ) : (
             <div>
