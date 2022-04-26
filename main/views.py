@@ -8,7 +8,7 @@ from .models import (
 )
 from rest_framework.decorators import APIView
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status, viewsets, mixins
 
@@ -28,6 +28,15 @@ class UserAccount(UserSerializer, RegisterViewSet):
         serializer.is_valid(false_exception=True)
         serializer.save()
         return Response(serializer.data, status=200) 
+
+
+def logout(request):
+    if request.method == 'POST':
+        request.user.auth_token.delete()
+
+        logout(request)
+        return Response('User Logged out successfully!')
+
          
 # Comment
 class CommentView(APIView):
