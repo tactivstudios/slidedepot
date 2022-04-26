@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect} from "react";
 
 import axios from "@/APIService/axios";
-const REGISTER_URL = 'http://127.0.0.1:8000/api/users/';
+const REGISTER_URL = '/api/users/';
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -117,7 +117,7 @@ const Signup = () => {
             <h1>Register</h1>
             <p>
                 already have an acount? <br />
-                    <span onClick={() => navigate("/")}>Sign In</span>
+                    <span onClick={() => navigate("/login")}>Sign In</span>
             </p>
               <form onSubmit={handleSubmit}>
                   <label htmlFor="first_name">
