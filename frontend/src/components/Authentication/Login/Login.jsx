@@ -4,7 +4,7 @@ import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "@/context/AuthProvider";
 
 import axios from "@/APIService/axios";
-const LOGIN_URL = 'http://127.0.0.1:8000/auth/';
+const LOGIN_URL = '/auth/';
 
 const Login = () => {
   const navigate = useNavigate();
