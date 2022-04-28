@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)yla*0litja4pa27rkn+e@yky1woeooe2eduk&)ew48(_e!v96
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -65,6 +65,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+REST_FRAMEWORK = {
+    "DATE_INPUT_FORMATS": ["%B %d, %Y"],
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 
