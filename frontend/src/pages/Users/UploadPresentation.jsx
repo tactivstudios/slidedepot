@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30vw",
+  height: "90vh",
+  bgcolor: "background.paper",
+  boxShadow: 20,
+  overflowY: "scroll",
+  p: 5,
+  borderRadius: 2,
+};
 
 function UploadPresentation({ closeModal }) {
   const [id, setID] = useState("");
@@ -112,8 +127,7 @@ function UploadPresentation({ closeModal }) {
   }
 
   return (
-    <div className="absolute w-full h-screen flex items-center justify-center">
-      <div className="flex flex-col bg-white border rounded-lg shadow-xl w-2/6 p-8">
+      <Box sx={style}>
         <div className="relative w-full mb-20">
           <div className="static text-black text-2xl font-normal not-italic mb-2">
             <span>Upload Presentation</span>
@@ -252,8 +266,7 @@ function UploadPresentation({ closeModal }) {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </Box>
   );
 }
 
