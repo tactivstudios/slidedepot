@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect} from "react";
 
 import axios from "@/APIService/axios";
+import Navbar from '@/components/Guest/Navbar/Navbar';
 const REGISTER_URL = '/api/users/';
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -112,18 +113,21 @@ const Signup = () => {
             </div>
          ) : (
           <div className='w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md'>
+            <Navbar />
             <p ref={errRef} className={errMsg ? "errmsg" : 
             "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1 className='text-3xl font-semibold mb-2'>Sign up</h1>
             <p className='mb-5'>
                 Already have an acount? {" "}
-                    <span onClick={() => navigate("/")}>Sign In</span>
+                    <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/")}>Sign In</span>
             </p>
-              <form onSubmit={handleSubmit}>
-                  <label htmlFor="first_name">
+              <form className='flex flex-col' onSubmit={handleSubmit}>
+                  <label className='my-1 font-semibold text-sm' htmlFor="first_name">
                         First Name: 
                       </label>
                     <input 
+                      className='form-input'
+                      placeholder='First Name'
                       type="text" 
                       id="first_name"
                       ref={userRef}
@@ -132,11 +136,13 @@ const Signup = () => {
                       value={first_name}
                       required
                     /> 
-                    <br />
-                  <label htmlFor="last_name">
+                    
+                  <label className='my-1 font-semibold text-sm' htmlFor="last_name">
                         Last Name: 
                       </label>
                     <input 
+                      className='form-input'
+                      placeholder='Last Name'
                       type="text" 
                       id="last_name"
                       ref={userRef}
@@ -145,13 +151,15 @@ const Signup = () => {
                       value={last_name}
                       required
                     /> 
-                    <br />
-                    <label htmlFor="username">
+                   
+                    <label className='my-1 font-semibold text-sm' htmlFor="username">
                         Email: 
                         <span className={validEmail ? "valid" : "hide"} />
                         <span className={validEmail || !email ? "hide" : "invalid"} />
                       </label>
                     <input 
+                      className='form-input'
+                      placeholder='Email'
                       type="email" 
                       id="username"
                       ref={userRef}
@@ -167,12 +175,14 @@ const Signup = () => {
                     <p id="uidnote" className={userFocus && email && !validEmail ? "instructions" : "offscreen"}>
                     </p>
 
-                    <label htmlFor="password">
+                    <label className='my-1 font-semibold text-sm' htmlFor="password">
                         Password: 
                         <span className={validPassword ? "valid" : "hide"} />
                         <span className={validPassword || !password ? "hide" : "invalid"} />
                       </label>
                     <input 
+                      className='form-input'
+                      placeholder='Password'
                       type="password" 
                       id="password"
                       onChange={(e) => setPassword(e.target.value)}
@@ -185,8 +195,14 @@ const Signup = () => {
                     />
                     <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
                     </p>
-
-                    <button disabled = {!validEmail || !validPassword ? true : false}>
+                    <div className='flex items-center'>
+                      <input type="checkbox" />
+                      <h1 className='mx-1 font-normal text-sm'>
+                        I agree to the {" "}
+                        <span className='underline'>Terms and Condition</span>
+                      </h1>
+                    </div>
+                    <button className='btn btn-block btn-default mt-5' disabled = {!validEmail || !validPassword ? true : false}>
                       Sign Up
                     </button>
                 </form>
