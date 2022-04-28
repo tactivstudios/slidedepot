@@ -12,6 +12,23 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PresentationSerializer(serializers.ModelSerializer):
+    file_name = serializers.SerializerMethodField()
+    date_posted = serializers.DateField(format="%B %d, %Y")
+    category = serializers.SlugRelatedField(
+        slug_field='name', 
+        queryset=Category.objects.all())
+
     class Meta:
         model = Presentation
-        fields = '__all__'
+        fields = (
+            'id',
+            'file',
+            'file_name',
+            'thumbnail_image',
+            'title',
+            'date_posted',
+            'category'
+        )
+
+    def get_file_name(self, instance):
+        return instance.file.name
