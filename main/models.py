@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Comment(models.Model):
     presentation = models.ForeignKey(Presentation, related_name="comments", on_delete=models.CASCADE)
-    commenter_name = models.CharField(max_length=200)
+    commenter_name = models.CharField(max_length=240)
     comment_body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
