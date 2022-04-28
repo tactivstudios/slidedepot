@@ -69,6 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
         return token
 
+    
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'

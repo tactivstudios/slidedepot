@@ -4,11 +4,14 @@ import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "@/context/AuthProvider";
 
 import axios from "@/APIService/axios";
-const LOGIN_URL = 'http://127.0.0.1:8000/auth/';
+const LOGIN_URL = '/auth/';
+
+
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
+
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
@@ -16,8 +19,7 @@ const Login = () => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
-
+  const [token, setToken] = useState('');
   useEffect(() => {
     userRef.current.focus();
   }, [])
@@ -37,13 +39,17 @@ const Login = () => {
               withCredentials: true
             }
           );
-          console.log(JSON.stringify(response?.data));
+          // console.log(JSON.stringify(response?.data));
           // console.log(JSON.stringify(response));
-          const Token = response?.data?.Token;
+          const Token = JSON.stringify(response?.data?.token);
           setAuth({username, password, Token});
           setUser('');
           setPassword('');
-          setSuccess(true);
+          // setSuccess(true);
+          localStorage.setItem("Token",Token);
+          setToken(Token)
+          navigate("/landing/")
+          
     }catch(err){
       if(!err?.response){
         setErrMsg('No server Response');
@@ -60,44 +66,36 @@ const Login = () => {
   }
 
   return (
-      <>
-          {success ? (
-            <div>
-              <h1>You are Logged in!</h1>
-            </div>
-         ) : (
-            <div>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h1>Log In</h1>
-                <p>
-                  Don't have an account?
-                  <span onClick={() => navigate("/signup/")}>Sign up</span>
-                </p>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">Email</label>
-                    <input 
-                      type="text" 
-                      id="username"
-                      ref={userRef}
-                      autoComplete="off" 
-                      onChange={(e) => setUser(e.target.value)}
-                      value={user}
-                      required
-                    />
+    <div>
+        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+        <h1>Log In</h1>
+        <p>
+          Don't have an account?
+          <span onClick={() => navigate("/signup/")}>Sign up</span>
+        </p>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="username">Email</label>
+            <input 
+              type="text" 
+              id="username"
+              ref={userRef}
+              autoComplete="off" 
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
+              required
+            />
 
-                    <label htmlFor="password">Password</label>
-                    <input 
-                      type="password" 
-                      id="password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      value={password}
-                      required
-                    />
-                    <button>Log In</button>
-                </form>
-            </div>
-         )}
-    </>
+            <label htmlFor="password">Password</label>
+            <input 
+              type="password" 
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              required
+            />
+            <button>Log In</button>
+        </form>
+    </div>
   )
 }
 
