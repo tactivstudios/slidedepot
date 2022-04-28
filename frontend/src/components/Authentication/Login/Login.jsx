@@ -68,9 +68,7 @@ const Login = () => {
   return (
       <div className="w-screen h-screen grid place-items-center font-font">
           {success ? (
-            <div>
-              <h1>You are Logged in!</h1>
-            </div>
+            <Landing />
          ) : (
            <div className="w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md">
               <Navbar />
