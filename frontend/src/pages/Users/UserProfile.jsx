@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "tw-elements";
+import { ToastContainer, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import PresentationCard from "@/components/Users/PresentationCard";
 import UploadPresentation from "@/pages/Users/UploadPresentation";
 
@@ -74,6 +76,7 @@ class UserProfile extends Component {
   render() {
     return (
       <div className="container flex flex-col max-h-screen mx-auto px-10">
+        <ToastContainer transition={Bounce} />
         <button
           className="static bg-purple-900 border-0 rounded-md shadow-sm w-min px-3 py-2 justify-center items-center text-center"
           type="button"
