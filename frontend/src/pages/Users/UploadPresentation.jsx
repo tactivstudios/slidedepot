@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Box from "@mui/material/Box";
+import cookie from "react-cookies";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const style = {
   position: "absolute",
@@ -22,7 +25,6 @@ function UploadPresentation({ closeModal }) {
   const [thumbnail_image, setThumbnailImage] = useState(null);
   const [tbnl_preview, setTbnlPreview] = useState(null);
   const [title, setTitle] = useState("");
-  const [date_posted, setDatePosted] = useState("");
   const [category, setCategory] = useState([]);
   const [slctdCategory, setSlctdCategory] = useState("");
 
@@ -107,166 +109,169 @@ function UploadPresentation({ closeModal }) {
     presentation_data.append("file", file);
     presentation_data.append("thumbnail_image", thumbnail_image);
     presentation_data.append("title", title);
-    presentation_data.append("date_posted", date_posted);
     presentation_data.append("category", slctdCategory);
 
     axios
       .post("http://127.0.0.1:8000/upload-presentation/", presentation_data, {
         headers: {
+          "X-CSRFToken": cookie.load("csrftoken"),
           "content-type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res.data);
+        if (res.status === 201) {
+          toast.success(`${title} uploaded successfully!`, {
+            position: "top-center",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
       });
-
-    setDatePosted("");
   }
 
   return (
-      <Box sx={style}>
-        <div className="relative w-full mb-20">
-          <div className="static text-black text-2xl font-normal not-italic mb-2">
-            <span>Upload Presentation</span>
-          </div>
-          <div className="absolute text-slate-600 text-base font-normal not-italic">
-            <span>Share your presentation to the community</span>
-          </div>
+    <Box sx={style}>
+      <div className="relative w-full mb-20">
+        <div className="static text-black text-2xl font-normal not-italic mb-2">
+          <span>Upload Presentation</span>
         </div>
-        <form onSubmit={onSubmit}>
+        <div className="absolute text-slate-600 text-base font-normal not-italic">
+          <span>Share your presentation to the community</span>
+        </div>
+      </div>
+      <form onSubmit={onSubmit}>
+        <div className="relative">
+          <label
+            htmlFor="set_file"
+            className="setfiles flex flex-row bg-white border box-border rounded-md w-full p-16 justify-center items-center cursor-pointer outline-none">
+            <input
+              type="file"
+              id="set_file"
+              name="set_file"
+              onChange={onChangeFile}
+            />
+            {file === null ? (
+              <span className="absolute text-gray-300 text-base font-normal text-center">
+                Drag and Drop file <br /> or <br />
+                <span className="text-purple-900 hover:underline">Browse</span>
+              </span>
+            ) : (
+              <span className="text-purple-900 hover:underline">Re-upload</span>
+            )}
+          </label>
+        </div>
+        <div className="relative w-full my-7">
+          <div className="relative w-full mb-5">
+            <div className="static text-slate-600 text-base font-normal not-italic mb-5">
+              <span>
+                Thumbnail (Optional) Upload your preferred thumbnail for the
+                presentation. Recommended aspect ratio is 16:9.
+              </span>
+            </div>
+          </div>
           <div className="relative">
+            <div className="relative">
+              <img
+                className="w-full aspect-video"
+                src={tbnl_preview}
+                alt="thumbnail_view"
+                id="thumbnail_view"
+                hidden={true}
+              />
+            </div>
             <label
-              htmlFor="set_file"
-              className="setfiles flex flex-row bg-white border box-border rounded-md w-full p-16 justify-center items-center cursor-pointer outline-none">
+              id="upload_button"
+              htmlFor="thumbnail_image"
+              className="thumbnail flex flex-row bg-purple-900 border-0 rounded-md shadow-sm justify-center items-center w-full py-2 cursor-pointer outline-none">
               <input
                 type="file"
-                id="set_file"
-                name="set_file"
-                onChange={onChangeFile}
+                id="thumbnail_image"
+                name="thumbnail_image"
+                onChange={onChangeThumbnailImage}
               />
-              {file === null ? (
-                <span className="absolute text-gray-300 text-base font-normal text-center">
-                  Drag and Drop file <br /> or <br />
-                  <span className="text-purple-900 hover:underline">
-                    Browse
-                  </span>
-                </span>
-              ) : (
-                <span className="text-purple-900 hover:underline">
-                  Re-upload
-                </span>
-              )}
+              <span className="static text-white text-sm font-medium leading-5 not-italic">
+                Upload
+              </span>
             </label>
+            <button
+              id="delete_thumbnail"
+              className="flex flex-row bg-purple-900 border-0 rounded-md shadow-sm justify-center items-center w-full my-5 py-2 cursor-pointer outline-none"
+              onClick={delete_thumbnail}
+              hidden={true}>
+              <span className="static text-white text-sm font-medium leading-5 not-italic">
+                Delete thumbnail
+              </span>
+            </button>
           </div>
-          <div className="relative w-full my-7">
-            <div className="relative w-full mb-5">
-              <div className="static text-slate-600 text-base font-normal not-italic mb-5">
-                <span>
-                  Thumbnail (Optional) Upload your preferred thumbnail for the
-                  presentation. Recommended aspect ratio is 16:9.
-                </span>
-              </div>
+        </div>
+        <div className="relative w-full my-10">
+          <div className="relative w-full mb-5">
+            <div className="static text-black text-sm font-medium not-italic mb-1">
+              <span>Title</span>
             </div>
             <div className="relative">
-              <div className="relative">
-                <img
-                  className="w-full aspect-video"
-                  src={tbnl_preview}
-                  alt="thumbnail_view"
-                  id="thumbnail_view"
-                  hidden={true}
-                />
-              </div>
-              <label
-                id="upload_button"
-                htmlFor="thumbnail_image"
-                className="thumbnail flex flex-row bg-purple-900 border-0 rounded-md shadow-sm justify-center items-center w-full py-2 cursor-pointer outline-none">
-                <input
-                  type="file"
-                  id="thumbnail_image"
-                  name="thumbnail_image"
-                  onChange={onChangeThumbnailImage}
-                />
-                <span className="static text-white text-sm font-medium leading-5 not-italic">
-                  Upload
-                </span>
-              </label>
-              <button
-                id="delete_thumbnail"
-                className="flex flex-row bg-purple-900 border-0 rounded-md shadow-sm justify-center items-center w-full my-5 py-2 cursor-pointer outline-none"
-                onClick={delete_thumbnail}
-                hidden={true}>
-                <span className="static text-white text-sm font-medium leading-5 not-italic">
-                  Delete thumbnail
-                </span>
-              </button>
+              <input
+                className="static flex bg-white text-black placeholder-gray-300 border rounded-md w-full p-2 px-3 outline-none"
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Title"
+                value={title}
+                onChange={onChangeTitle}
+                required
+              />
             </div>
           </div>
-          <div className="relative w-full my-10">
-            <div className="relative w-full mb-5">
-              <div className="static text-black text-sm font-medium not-italic mb-1">
-                <span>Title</span>
-              </div>
-              <div className="relative">
-                <input
-                  className="static flex bg-white text-black placeholder-gray-300 border rounded-md w-full p-2 px-3 outline-none"
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  value={title}
-                  onChange={onChangeTitle}
-                  required
-                />
-              </div>
+          <div className="relative w-full">
+            <div className="static text-black text-sm font-medium not-italic mb-1">
+              <span>Category</span>
             </div>
-            <div className="relative w-full">
-              <div className="static text-black text-sm font-medium not-italic mb-1">
-                <span>Category</span>
-              </div>
-              <div className="relative">
-                <select
-                  className="static flex bg-white border rounded-md w-full p-2 px-3 outline-none cursor-pointer"
-                  type="text"
-                  id="category"
-                  name="category"
-                  value={slctdCategory}
-                  onChange={onSelectedCategory}
-                  required>
-                  <option value="" disabled selected>
-                    Choose Category
+            <div className="relative">
+              <select
+                className="static flex bg-white border rounded-md w-full p-2 px-3 outline-none cursor-pointer"
+                type="text"
+                id="category"
+                name="category"
+                value={slctdCategory}
+                onChange={onSelectedCategory}
+                required>
+                <option value="" disabled selected>
+                  Choose Category
+                </option>
+                {category.map((categories, cat) => (
+                  <option key={cat} value={categories.name}>
+                    {categories.name}
                   </option>
-                  {category.map((categories, cat) => (
-                    <option key={cat} value={categories.id}>
-                      {categories.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                ))}
+              </select>
             </div>
           </div>
-          <div className="relative flex w-full items-end justify-end">
-            <button
-              className="static flex-row bg-gray-200 border-0 rounded-md mr-2 px-5 py-2 justify-center items-center text-center"
-              type="button"
-              onClick={() => closeModal(false)}>
-              <span className="static text-black text-sm font-normal leading-5 not-italic">
-                Cancel
-              </span>
-            </button>
-            <button
-              className="static flex-row bg-purple-900 border-0 rounded-md shadow-sm px-5 py-2 justify-center items-center text-center"
-              type="submit">
-              <span className="static text-white text-sm font-medium leading-5 not-italic">
-                Continue
-              </span>
-            </button>
-          </div>
-        </form>
-      </Box>
+        </div>
+        <div className="relative flex w-full items-end justify-end">
+          <button
+            className="static flex-row bg-gray-200 border-0 rounded-md mr-2 px-5 py-2 justify-center items-center text-center"
+            type="button"
+            onClick={() => closeModal(false)}>
+            <span className="static text-black text-sm font-normal leading-5 not-italic">
+              Cancel
+            </span>
+          </button>
+          <button
+            className="static flex-row bg-purple-900 border-0 rounded-md shadow-sm px-5 py-2 justify-center items-center text-center"
+            type="submit">
+            <span className="static text-white text-sm font-medium leading-5 not-italic">
+              Continue
+            </span>
+          </button>
+        </div>
+      </form>
+    </Box>
   );
 }
 
