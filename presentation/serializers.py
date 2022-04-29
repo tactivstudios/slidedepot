@@ -13,9 +13,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class PresentationSerializer(serializers.ModelSerializer):
     file_name = serializers.SerializerMethodField()
-    date_posted = serializers.DateField(format="%B %d, %Y")
     category = serializers.SlugRelatedField(
-        slug_field='name', 
+        slug_field='name',
         queryset=Category.objects.all())
 
     class Meta:
