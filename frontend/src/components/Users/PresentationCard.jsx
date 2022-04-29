@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { TrashIcon } from "@heroicons/react/outline";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const style = {
   position: "absolute",
@@ -19,6 +24,27 @@ export default function PresentationCard(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const date_posted = props.item.date_posted;
+
+  function handleDelete() {
+    axios
+      .delete(`http://127.0.0.1:8000/pt-details/${props.item.id}/`)
+      .then((res) => {
+        if (res.status === 204) {
+          toast.info(`Presentation "${props.item.title}" deleted!`, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <>
@@ -55,8 +81,8 @@ export default function PresentationCard(props) {
             src={`http://127.0.0.1:8000${props.item.file}`}
             width="100%"
             height="100%"
-            frameborder="0"></iframe>
-          <div className="font-font py-6 flex items-center justify-between">
+            frameBorder="0"></iframe>
+          <div className="font-font mt-10 mb-6 flex items-center justify-between">
             <div className="flex items-center gap-6">
               <img
                 src={props.item.thumbnail_image}
@@ -68,9 +94,16 @@ export default function PresentationCard(props) {
                   {props.item.title}
                 </h1>
                 <p className="text-gray-400">
-                  {props.item.title} • {props.item.date_posted}
+                  {props.item.title} •{" "}
+                  {dayjs(date_posted).format("MMMM DD, YYYY")}
                 </p>
               </div>
+            </div>
+            <div className="flex items-center gap-2 text-black">
+              <TrashIcon
+                className="h-7 w-7 cursor-pointer"
+                onClick={handleDelete}
+              />
             </div>
           </div>
           <div className="text-sm inline-flex font-normal px-5 py-2 bg-[#F5F3FF] text-[#4C1D95] rounded-full">
