@@ -5,6 +5,8 @@ import AuthContext from "@/context/AuthProvider";
 import cookie from 'react-cookies';
 
 import axios from "@/APIService/axios";
+import Navbar from "@/components/Guest/Navbar/Navbar";
+import Landing from "@/components/Users/Navbar/Landing";
 const LOGIN_URL = '/auth/';
 
 
@@ -20,6 +22,7 @@ const Login = () => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
   const [token, setToken] = useState('');
   useEffect(() => {
     userRef.current.focus();
