@@ -2,8 +2,13 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect} from "react";
 
+import Alert from '@mui/material/Alert';
+import InfoIcon from '@mui/icons-material/InfoOutlined';
+
 import axios from "@/APIService/axios";
 import Navbar from '@/components/Guest/Navbar/Navbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 const REGISTER_URL = '/api/users/';
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -108,7 +113,7 @@ const Signup = () => {
     <div className='w-screen h-screen grid place-items-center font-font'>
         {success ? (
             <div>
-              <h1>Success!</h1>
+            <h1>Success</h1>
                   {/* <span onClick={() => navigate("/")}>Sign In</span> */}
             </div>
          ) : (
@@ -154,8 +159,13 @@ const Signup = () => {
                    
                     <label className='my-1 font-semibold text-sm' htmlFor="username">
                         Email: 
-                        <span className={validEmail ? "valid" : "hide"} />
-                        <span className={validEmail || !email ? "hide" : "invalid"} />
+                        <span className={validEmail ? "valid" : "hide"}>
+                          {/* <FontAwesomeIcon icon={faCheck} /> */}
+                        </span>
+                        
+                        <span className={validEmail || !email ? "hide" : "invalid"}>
+                          {/* <FontAwesomeIcon icon={faTimes} />  */}
+                        </span>
                       </label>
                     <input 
                       className='form-input'
@@ -172,13 +182,26 @@ const Signup = () => {
                       onFocus = {() => setPasswordFocus(true)}
                       onBlur = {() => setUserFocus(false)}
                     />
+
                     <p id="uidnote" className={userFocus && email && !validEmail ? "instructions" : "offscreen"}>
+                      {/* <InfoIcon /> {" "}
+                     <span className='text-sm'>
+                       
+                       4 to 24 character. <br />
+                      Must begin with a letter. <br />
+                      Letters, numbers, underscores, hyphens allowed.
+                       
+                       </span>  */}
                     </p>
 
                     <label className='my-1 font-semibold text-sm' htmlFor="password">
                         Password: 
-                        <span className={validPassword ? "valid" : "hide"} />
-                        <span className={validPassword || !password ? "hide" : "invalid"} />
+                        <span className={validPassword ? "valid" : "hide"}>
+                          {/* <FontAwesomeIcon icon={faCheck} /> */}
+                        </span>
+                        <span className={validPassword || !password ? "hide" : "invalid"}>
+                          {/* <FontAwesomeIcon icon={faTimes} /> */}
+                        </span>
                       </label>
                     <input 
                       className='form-input'
@@ -194,8 +217,19 @@ const Signup = () => {
                       onBlur = {() => setUserFocus(false)}
                     />
                     <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
+                    <InfoIcon /> {" "}
+                     <span className='text-sm'>
+                       
+                       4 to 8 character. <br />
+                      Must include uppercase and lowecase letters, a number and a special character. <br />
+                      Allowed special characters: <span aria-label='exclamation'>!</span>
+                      <span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span>
+                      <span aria-label='dollar sign'>$</span>
+                       
+                       </span>
+                       
                     </p>
-                    <div className='flex items-center'>
+                    <div className='flex items-center mt-3'>
                       <input type="checkbox" />
                       <h1 className='mx-1 font-normal text-sm'>
                         I agree to the {" "}
