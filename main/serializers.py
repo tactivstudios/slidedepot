@@ -31,4 +31,4 @@ class UserSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('commenter_name', 'comment_body')
+        fields = ('comment_body')
