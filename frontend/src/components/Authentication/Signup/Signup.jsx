@@ -124,7 +124,7 @@ const Signup = () => {
             <h1 className='text-3xl font-semibold mb-2'>Sign up</h1>
             <p className='mb-5'>
                 Already have an acount? {" "}
-                    <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/")}>Sign In</span>
+                    <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/login")}>Sign In</span>
             </p>
               <form className='flex flex-col' onSubmit={handleSubmit}>
                   <label className='my-1 font-semibold text-sm' htmlFor="first_name">
