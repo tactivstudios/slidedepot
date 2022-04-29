@@ -66,11 +66,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+]
 
-REST_FRAMEWORK = {
-    "DATE_INPUT_FORMATS": ["%B %d, %Y"],
-}
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
