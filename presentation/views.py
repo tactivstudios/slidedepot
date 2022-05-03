@@ -43,13 +43,20 @@ class PresentationPost(APIView):
 
 
 class PresentationDetail(RetrieveAPIView, DestroyAPIView):
-    lookup_field = "id"
+    lookup_field = "presentation_id"
     queryset = Presentation.objects.all()
     serializer_class = PresentationSerializer
 
     def presentation_delete(request, presentation_id):
-        presentation = get_object_or_404(Presentation, id=presentation_id)
+        presentation = get_object_or_404(
+            Presentation, presentation_id=presentation_id)
         if presentation.thumbnail_image:
             presentation.thumbnail_image.delete()
         presentation.delete()
         return redirect("/profile/")
+
+
+class ProfileDetail(RetrieveAPIView):
+    lookup_field = "author"
+    queryset = Presentation.objects.all()
+    serializer_class = PresentationSerializer
