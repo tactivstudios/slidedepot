@@ -20,13 +20,14 @@ class PresentationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Presentation
         fields = (
-            'id',
+            'presentation_id',
             'file',
             'file_name',
             'thumbnail_image',
             'title',
             'date_posted',
-            'category'
+            'category',
+            'author',
         )
 
     def get_file_name(self, instance):
