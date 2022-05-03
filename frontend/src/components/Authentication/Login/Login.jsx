@@ -50,7 +50,7 @@ const Login = () => {
           setUser('');
           setPassword('');
           // setSuccess(true);
-          localStorage.setItem("Token",Token);
+          localStorage.setItem("token",Token);
           setToken(Token)
           navigate("/landing/")
           
