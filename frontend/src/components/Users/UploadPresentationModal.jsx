@@ -3,13 +3,11 @@ import axios from "axios";
 import { API_GET_CATEGORY, API_PT_UPLOAD } from "@/APIService/config";
 import { div_style_two } from "@/components/Users/ModalBox";
 
-import cookie from "react-cookies";
 import Box from "@mui/material/Box";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function UploadPresentationModal({ closeModal }) {
-  const [presentation_id, setPresentationID] = useState("");
   const [file, setFile] = useState(null);
   const [thumbnail_image, setThumbnailImage] = useState(null);
   const [tbnl_preview, setTbnlPreview] = useState(null);
@@ -17,23 +15,8 @@ function UploadPresentationModal({ closeModal }) {
   const [category, setCategory] = useState([]);
   const [slctdCategory, setSlctdCategory] = useState("");
 
-  function generateID(id) {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const length = 6;
-    const prefix = "PST";
-    let random = "";
-
-    for (let i = 0; i < length; i++) {
-      const suffix = Math.floor(Math.random() * characters.length);
-      random += characters[suffix];
-    }
-    id = prefix + random;
-    setPresentationID(id);
-  }
-
   useEffect(() => {
     // Function
-    generateID();
     document.getElementById("delete_thumbnail").style.display = "none";
 
     // API
@@ -94,7 +77,6 @@ function UploadPresentationModal({ closeModal }) {
 
     let presentation_data = new FormData();
 
-    presentation_data.append("presentation_id", presentation_id);
     presentation_data.append("file", file);
     presentation_data.append("thumbnail_image", thumbnail_image);
     presentation_data.append("title", title);
@@ -103,7 +85,7 @@ function UploadPresentationModal({ closeModal }) {
     axios
       .post(`${API_PT_UPLOAD}`, presentation_data, {
         headers: {
-          "X-CSRFToken": cookie.load("csrftoken"),
+          Authorization: `${localStorage.getItem("token")}`,
           "content-type": "multipart/form-data",
         },
       })
