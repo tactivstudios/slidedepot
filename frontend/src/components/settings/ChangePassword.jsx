@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import cookie from 'react-cookies';
+
 
 import axios from "@/APIService/axios";
 const PASSWORD_URL = '/api/change-password/';
