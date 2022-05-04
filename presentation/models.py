@@ -1,7 +1,14 @@
+import random
 from django.db import models
 from django.utils.translation import gettext as _
+from django.utils import timezone
 
 # Create your models here.
+
+
+def generate_id():
+    number = random.randint(10000, 99999)
+    return 'PT{}{}'.format(timezone.now().strftime('%y%m%d'), number)
 
 
 class Category(models.Model):
@@ -17,7 +24,7 @@ class Category(models.Model):
 
 class Presentation(models.Model):
     presentation_id = models.CharField(
-        primary_key=True, max_length=200, unique=True)
+        default=generate_id, primary_key=True, max_length=200, unique=True)
     file = models.FileField(upload_to='save_file', null=True, blank=True)
     file_name = models.TextField(null=True, blank=True)
     thumbnail_image = models.ImageField(
