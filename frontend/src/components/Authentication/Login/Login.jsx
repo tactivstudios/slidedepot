@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "@/context/AuthProvider";
-import cookie from 'react-cookies';
+
 
 import axios from "@/APIService/axios";
 import Navbar from "@/components/Guest/Navbar/Navbar";
@@ -46,11 +46,10 @@ const Login = () => {
           setAuth({username, password, Token});
           setUser('');
           setPassword('');
-          
           localStorage.setItem("token",Token);
           setToken(Token)
           navigate("/landing/")
-          
+        
     }catch(err){
       if(!err?.response){
         setErrMsg('No server Response');
