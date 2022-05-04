@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { API_USERS, API_PT_UPLOAD } from "@/APIService/config";
@@ -17,7 +17,15 @@ function UserProfile() {
   const [presentation, setPresentation] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+  const [isAuth, setIsAuth] = useState(false);
+
   const { id } = useParams();
+
+  function AuthToken() {
+    if (localStorage.getItem("token") !== null) {
+      setIsAuth(true);
+    }
+  }
 
   function getUserDetails() {
     axios
@@ -59,42 +67,43 @@ function UserProfile() {
       return getCard();
     } else {
       return (
-        <div className="grid grid-cols-4 gap-11">
-          <div className="w-64 h-64 bg-white border border-black border-dashed box-border rounded-lg">
-            <div className="text-black text-center p-5">
-              <span className="not-italic font-bold text-lg">
-                Upload your first presentation
-              </span>
-              <p className="not-italic font-normal text-sm items-center">
-                Share your presentation. Get feedback and be part of the growing
-                community!
-              </p>
-              <button
-                className="static bg-purple-900 border-0 rounded-md shadow-sm px-3 py-2 justify-center items-center text-center"
-                type="button"
-                onClick={() => setShowModal(true)}>
-                <span className="static text-white text-sm font-medium not-italic">
-                  Upload
-                </span>
-              </button>
+        <Fragment>
+          {isAuth === true ? (
+            <div className="grid grid-cols-4 gap-11">
+              <div className="w-64 h-64 bg-white border border-black border-dashed box-border rounded-lg">
+                <div className="text-black text-center p-5 space-y-4">
+                  <span className="not-italic font-bold text-lg">
+                    Upload your first presentation
+                  </span>
+                  <p className="not-italic font-normal text-sm items-center">
+                    Share your presentation. Get feedback and be part of the
+                    growing community!
+                  </p>
+                  <button
+                    className="static bg-purple-900 border-0 rounded-md shadow-sm px-3 py-2 justify-center items-center text-center"
+                    type="button"
+                    onClick={() => setShowModal(true)}>
+                    <span className="static text-white text-sm font-medium not-italic">
+                      Upload
+                    </span>
+                  </button>
+                </div>
+              </div>
             </div>
-            {showModal ? (
-              <UploadPresentation closeModal={() => setShowModal(false)} />
-            ) : null}
-          </div>
-        </div>
+          ) : null}
+        </Fragment>
       );
     }
   }
 
   useEffect(() => {
+    AuthToken();
     getPresentation();
     getUserDetails();
   }, []);
 
   return (
     <div className="container flex flex-col mx-auto px-10 mt-20">
-      <Navbar />
       <ToastContainer transition={Bounce} />
       <div className="flex m-10 items-center space-x-5">
         <img
@@ -167,17 +176,17 @@ function UserProfile() {
           className="tab-pane fade"
           id="tabs-saveSlides"
           role="tabpanel"
-          aria-labelledby="tabs-profile-tabFill">
-          My saved slides
-        </div>
+          aria-labelledby="tabs-profile-tabFill"></div>
         <div
           className="tab-pane fade"
           id="tabs-all"
           role="tabpanel"
-          aria-labelledby="tabs-profile-tabFill">
-          All slides
-        </div>
+          aria-labelledby="tabs-profile-tabFill"></div>
       </div>
+      <Navbar />
+      {showModal ? (
+        <UploadPresentation closeModal={() => setShowModal(false)} />
+      ) : null}
     </div>
   );
 }
