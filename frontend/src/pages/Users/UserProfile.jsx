@@ -23,7 +23,7 @@ function UserProfile() {
     axios
       .get(`${API_USERS}${id}`, {
         headers: {
-          "content-type": "multipart/form-data",
+          "content-type": "application/json",
           Authorization: `${localStorage.getItem("token")}`,
         },
       })
@@ -72,7 +72,8 @@ function UserProfile() {
               <button
                 className="static bg-purple-900 border-0 rounded-md shadow-sm px-3 py-2 justify-center items-center text-center"
                 type="button"
-                onClick={() => setShowModal(true)}>
+                onClick={() => setShowModal(true)}
+              >
                 <span className="static text-white text-sm font-medium not-italic">
                   Upload
                 </span>
@@ -114,7 +115,8 @@ function UserProfile() {
       <ul
         className="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4 mx-10"
         id="tabs-tabFill"
-        role="tablist">
+        role="tablist"
+      >
         <li className="nav-item flex-auto text-center" role="presentation">
           <a
             href="#tabs-mySlides"
@@ -124,7 +126,8 @@ function UserProfile() {
             data-bs-target="#tabs-mySlides"
             role="tab"
             aria-controls="tabs-mySlides"
-            aria-selected="true">
+            aria-selected="true"
+          >
             My Slides
           </a>
         </li>
@@ -137,7 +140,8 @@ function UserProfile() {
             data-bs-target="#tabs-saveSlides"
             role="tab"
             aria-controls="tabs-saveSlides"
-            aria-selected="false">
+            aria-selected="false"
+          >
             My Slides ()
           </a>
         </li>
@@ -150,7 +154,8 @@ function UserProfile() {
             data-bs-target="#tabs-all"
             role="tab"
             aria-controls="tabs-all"
-            aria-selected="false">
+            aria-selected="false"
+          >
             All
           </a>
         </li>
@@ -160,21 +165,24 @@ function UserProfile() {
           className="tab-pane fade show active"
           id="tabs-mySlides"
           role="tabpanel"
-          aria-labelledby="tabs-home-tabFill">
+          aria-labelledby="tabs-home-tabFill"
+        >
           <div className="grid grid-cols-4 gap-11">{displayData()}</div>
         </div>
         <div
           className="tab-pane fade"
           id="tabs-saveSlides"
           role="tabpanel"
-          aria-labelledby="tabs-profile-tabFill">
+          aria-labelledby="tabs-profile-tabFill"
+        >
           My saved slides
         </div>
         <div
           className="tab-pane fade"
           id="tabs-all"
           role="tabpanel"
-          aria-labelledby="tabs-profile-tabFill">
+          aria-labelledby="tabs-profile-tabFill"
+        >
           All slides
         </div>
       </div>
