@@ -6,13 +6,20 @@ import axios from "@/APIService/axios";
 function Comment({ presentation }) {
   const [comment, setComment] = useState("");
 
+  console.log(presentation);
   function addComment() {
+    console.log(comment, presentation);
     axios
-      .post(`${API_COMMENTS}`, {
-        comment_body: comment,
-        presentation: presentation,
-        author: "Sample User",
-      })
+      .post(
+        `${API_COMMENTS}`,
+        JSON.parse(
+          JSON.stringify({
+            comment_body: comment,
+            presentation: presentation,
+            author: "Sample User",
+          })
+        )
+      )
       .then(() => {
         alert("success");
       })

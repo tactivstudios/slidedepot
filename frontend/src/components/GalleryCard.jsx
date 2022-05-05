@@ -20,7 +20,7 @@ const style = {
 };
 
 function GalleryCard({
-  presentation_id,
+  presentation,
   image,
   title,
   firstname,
@@ -86,7 +86,7 @@ function GalleryCard({
               />
             </div>
           </div>
-          <Comment presentation={presentation_id} />
+          <Comment presentation={presentation} />
         </Box>
       </Modal>
     </>

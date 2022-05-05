@@ -36,6 +36,7 @@ function GuestGallery() {
       });
   }
 
+  console.log("presentation is: ", presentation);
   return (
     <div className="font-font">
       <div className="w-screen h-64 grid place-items-center mt-9">
@@ -103,16 +104,19 @@ function GuestGallery() {
       <div className="p-10">
         <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-4 gap-4">
-            {presentation?.map((item) => (
-              <GalleryCard
-                key={item.presentation_id}
-                presentation={item.presentation_id}
-                image={item.thumbnail_image}
-                title={item.title}
-                author={item.author}
-                avatar="https://t4.ftcdn.net/jpg/02/99/97/35/360_F_299973520_rgAKO2BdhNhDArSSm7ikCT03qBCYcumJ.jpg"
-              />
-            ))}
+            {presentation.map((item) => {
+              console.log("item is: ", item.presentation_id);
+              return (
+                <GalleryCard
+                  key={item.presentation_id}
+                  presentation={item.presentation_id}
+                  image={item.thumbnail_image}
+                  title={item.title}
+                  author={item.author}
+                  avatar="https://t4.ftcdn.net/jpg/02/99/97/35/360_F_299973520_rgAKO2BdhNhDArSSm7ikCT03qBCYcumJ.jpg"
+                />
+              );
+            })}
           </div>
         </div>
       </div>
