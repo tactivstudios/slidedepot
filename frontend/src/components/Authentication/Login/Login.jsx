@@ -6,7 +6,7 @@ import cookie from "react-cookies";
 
 import axios from "@/APIService/axios";
 import Navbar from "@/components/Guest/Navbar/Navbar";
-import Landing from "@/components/Users/components/Landing";
+import UserGallery from "@/components/Users/components/UserGallery";
 const LOGIN_URL = "/auth/";
 
 const Login = () => {
@@ -53,7 +53,7 @@ const Login = () => {
       // setSuccess(true);
       localStorage.setItem("token", Token);
       setToken(Token);
-      navigate("/landing/");
+      navigate("/user-gallery/");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No server Response");
@@ -71,7 +71,7 @@ const Login = () => {
   return (
     <div className="w-screen h-screen grid place-items-center font-font">
       {success ? (
-        <Landing />
+        <UserGallery />
       ) : (
         <div className="w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md">
           <Navbar />

@@ -30,7 +30,10 @@ function Navbar() {
         <Fragment>
           <div className="fixed top-0 left-0 right-0 w-screen py-4 bg-white font-font">
             <div className="max-w-screen-2xl mx-auto flex items-center justify-between space-x-10 sticky z-50">
-              <div className="cursor-pointer" onClick={() => navigate("/")}>
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate("/user-gallery/")}
+              >
                 <img src={Logo} alt="logo" />
               </div>
               <div className="flex items-center gap-10">
