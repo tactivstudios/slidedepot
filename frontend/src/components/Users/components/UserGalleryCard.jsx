@@ -19,7 +19,7 @@ const style = {
   p: 4,
 };
 
-function GalleryCard({
+function UserGalleryCard({
   presentation_id,
   image,
   title,
@@ -76,14 +76,8 @@ function GalleryCard({
             </div>
 
             <div className="flex items-center gap-2 text-gray">
-              <DownloadIcon
-                className="h-5 w-5 cursor-pointer"
-                onClick={() => navigate("/login")}
-              />
-              <BookmarkIcon
-                className="h-5 w-5 cursor-pointer"
-                onClick={() => navigate("/login")}
-              />
+              <DownloadIcon className="h-5 w-5 cursor-pointer" />
+              <BookmarkIcon className="h-5 w-5 cursor-pointer" />
             </div>
           </div>
           <Comment presentation={presentation_id} />
@@ -93,4 +87,4 @@ function GalleryCard({
   );
 }
 
-export default GalleryCard;
+export default UserGalleryCard;

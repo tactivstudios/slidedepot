@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { SearchIcon } from "@heroicons/react/outline";
 
-import GalleryCard from "@/components/GalleryCard";
-import Navbar from "@/components/Guest/Navbar/Navbar";
+import UserGalleryCard from "@/components/Users/components/UserGalleryCard";
+import Navbar from "@/components/Users/Navbar";
 import axios from "@/APIService/axios";
 import { API_PT_UPLOAD } from "@/APIService/config";
 
@@ -15,7 +15,7 @@ const tabs = [
   "Education",
 ];
 
-function GuestGallery() {
+function UserGallery() {
   const [activeTab, setActiveTab] = useState(0);
   const [filter, setFilter] = useState("");
   const [presentation, setPresentation] = useState([]);
@@ -104,7 +104,7 @@ function GuestGallery() {
         <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-4 gap-4">
             {presentation?.map((item) => (
-              <GalleryCard
+              <UserGalleryCard
                 key={item.presentation_id}
                 presentation={item.presentation_id}
                 image={item.thumbnail_image}
@@ -120,4 +120,4 @@ function GuestGallery() {
   );
 }
 
-export default GuestGallery;
+export default UserGallery;
