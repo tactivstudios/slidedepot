@@ -101,6 +101,7 @@ function UploadPresentation({ closeModal }) {
           });
         }
       })
+      .then(closeModal(false))
       .catch((err) => {
         console.log(err);
       });

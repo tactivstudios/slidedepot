@@ -47,6 +47,7 @@ export default function PresentationCard(props) {
           });
         }
       })
+      .then(handleClose)
       .catch((err) => {
         console.log(err);
       });
