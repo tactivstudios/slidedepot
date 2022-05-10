@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 import axios from "@/APIService/axios";
@@ -7,10 +8,15 @@ const PASSWORD_URL = '/api/change-password/';
 
 
 export default function ChangePassword() {
+    const navigate = useNavigate();
+    const [new_password, confirm_password] = useState();
+    const [matchPwd, setMatchPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
     const [user, setUser] = useState({
     old_password: "",
     new_password: "",
-    // confirm_password: "",
+    confirm_password: "",
     });
 
     const updatePass = (event) => {
@@ -19,10 +25,10 @@ export default function ChangePassword() {
     const submitHandler = async (e) => {
 
     e.preventDefault();
-    // if(new_password === confirm_password){
-    //     setErrMsg("password_mismatch");
-    //     return;
-    // }
+    if(new_password !== confirm_password){
+        setErrMsg("password_mismatch");
+        return;
+    }
     try{
         const response = await axios.put(PASSWORD_URL, 
               JSON.stringify({old_password: user.old_password, new_password: user.new_password}), 
@@ -31,6 +37,7 @@ export default function ChangePassword() {
               }
             );
             const Token = JSON.stringify(response?.data?.token)
+            navigate("/landing/")
       } 
         catch(error){
             console.log(error)
@@ -60,17 +67,16 @@ export default function ChangePassword() {
                 value={user.new_password}
                 required
             />
-            {/* <label className="my-1 font-semibold text-sm" htmlFor="username">Confirm Password</label>
+            <label className="my-1 font-semibold text-sm">Confirm Password</label>
             <input 
                 id="confirm_password"
-                label="Confirm Password"
                 name="confirm_password"
                 type="password"
-                placeholder="Confirm Password"
                 onChange={updatePass}
                 value={user.confirm_password}
+                error = {setErrMsg}
                 required
-            /> */}
+            />
             <button className="btn-default rounded-md px-4 py-1 text-white" >Update</button>
         </form>
     </div>
