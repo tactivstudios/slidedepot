@@ -47,6 +47,11 @@ export default function PresentationCard(props) {
           });
         }
       })
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 3000);
+      })
       .then(handleClose)
       .catch((err) => {
         console.log(err);
