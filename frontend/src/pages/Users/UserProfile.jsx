@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { API_USERS, API_PT_UPLOAD } from "@/APIService/config";
+import { API_USERS, API_PT_GET_UPLOAD } from "@/APIService/config";
 import PresentationCard from "@/components/Users/PresentationCard";
 import UploadPresentation from "@/components/Users/UploadPresentation";
 import Navbar from "@/components/Users/Navbar";
@@ -31,7 +31,7 @@ function UserProfile() {
     axios
       .get(`${API_USERS}${id}`, {
         headers: {
-          "content-type": "multipart/form-data",
+          "content-type": "application/json",
           Authorization: `${localStorage.getItem("token")}`,
         },
       })
@@ -47,7 +47,7 @@ function UserProfile() {
 
   function getPresentation() {
     axios
-      .get(`${API_PT_UPLOAD}`)
+      .get(`${API_PT_GET_UPLOAD}`)
       .then((res) => {
         setPresentation(res.data);
       })
