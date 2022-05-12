@@ -30,16 +30,20 @@ class CategoryView(APIView):
 class PresentationPost(APIView):
     serializer_class = PresentationSerializer
 
-    def get(self, request, *args, **kwargs):
-        presentation = Presentation.objects.all()
-        serializer = self.serializer_class(presentation, many=True)
-        return Response(serializer.data)
-
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class PresentationGet(APIView):
+    serializer_class = PresentationSerializer
+
+    def get(self, request, *args, **kwargs):
+        presentation = Presentation.objects.all()
+        serializer = self.serializer_class(presentation, many=True)
+        return Response(serializer.data)
 
 
 class PresentationDetail(RetrieveAPIView, DestroyAPIView):
@@ -54,9 +58,3 @@ class PresentationDetail(RetrieveAPIView, DestroyAPIView):
             presentation.thumbnail_image.delete()
         presentation.delete()
         return redirect("/profile/")
-
-
-class ProfileDetail(RetrieveAPIView):
-    lookup_field = "author"
-    queryset = Presentation.objects.all()
-    serializer_class = PresentationSerializer
