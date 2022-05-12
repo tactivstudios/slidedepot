@@ -86,20 +86,25 @@ function UploadPresentation({ closeModal }) {
       .post(`${API_PT_UPLOAD}`, presentation_data, {
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
-          "content-type": "multipart/form-data",
+          "content-type": "application/json",
         },
       })
       .then((res) => {
         if (res.status === 201) {
           toast.success(`${title} uploaded successfully!`, {
             position: "top-center",
-            autoClose: false,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
           });
         }
+      })
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 3000);
       })
       .then(closeModal(false))
       .catch((err) => {
