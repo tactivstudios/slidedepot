@@ -145,11 +145,3 @@ function Landing() {
 }
 
 export default Landing;
-
-{/* <div className="justify-center">
-
-<div>
-
-
-</div>
-</div> */}
