@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
+import InfoIcon from '@mui/icons-material/InfoOutlined';
+
 import axios from "@/APIService/axios";
 const PASSWORD_URL = '/api/change-password/';
 
@@ -60,12 +62,18 @@ export default function ChangePassword() {
     };
 
   return (
-    <div>
-      <div>
+    <div className='w-screen h-screen grid place-items-center font-font'>
+      <div className='w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md'>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <form onSubmit={submitHandler}>  
-            <label className="my-1 font-semibold text-sm">Old Password</label>
+        <h1 className='text-3xl font-semibold mb-2'>Settings</h1>
+        <p className='mb-5 text-left whitespace-pre'>
+          Change Password {" "} 
+          <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/landing")}>back</span>
+        </p>
+        <form className='flex flex-col' onSubmit={submitHandler}>  
+            <label className="my-1 font-semibold text-sm" htmlFor="old_password">Old Password</label>
             <input 
+                className='form-input'
                 id="old_password"
                 type="password"
                 name="old_password"
@@ -74,8 +82,10 @@ export default function ChangePassword() {
                 value={user.old_password}
                 onChange={updatePass}
             />
-            <label className="my-1 font-semibold text-sm">New Password</label>
+
+            <label className="my-1 font-semibold text-sm" htmlFor="new_password">New Password</label>
             <input 
+                className='form-input'
                 id="new_password"
                 name="new_password"
                 type="password"
@@ -84,19 +94,9 @@ export default function ChangePassword() {
                 value={user.new_password}
                 required
             />
-            <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-            <span className='text-sm'>
-              
-               4 to 8 character. <br />
-              Must include uppercase and lowecase letters, a number and a special character. <br />
-              Allowed special characters: <span aria-label='exclamation'>!</span>
-              <span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span>
-              <span aria-label='dollar sign'>$</span>
-              
-            </span>
-            </p>            
-            <label className="my-1 font-semibold text-sm">Confirm Password</label>
-            <input 
+            <label className="my-1 font-semibold text-sm" htmlFor="confirm_password">Confirm Password</label>
+            <input
+                className='form-input' 
                 id="confirm_password"
                 name="confirm_password"
                 type="password"
@@ -104,9 +104,26 @@ export default function ChangePassword() {
                 value={user.confirm_password}
                 required
             />
-            <button className="btn-default rounded-md px-4 py-1 text-white">
+            <div>
+            <p id="pwdnote" className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
+            <InfoIcon /> {" "}
+            <span className='text-sm'>
+                4 to 8 character. <br />
+              Must include uppercase and lowecase letters, a number and a special character. <br />
+              Allowed special characters: <span aria-label='exclamation'>!</span>
+              <span aria-label='at symbol'>@</span><span aria-label='hashtag'>#</span>
+              <span aria-label='dollar sign'>$</span>
+              
+            </span>
+            </p>
+            <br /> 
+            </div>
+
+            <div>
+            <button className='btn btn-block btn-default mt-5'>
               Update
             </button>
+            </div>    
         </form>
         </div>
     </div>
