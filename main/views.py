@@ -2,6 +2,8 @@ from .serializers import (
     ChangePasswordSerializer,
     RegisterSerializer,
     CommentSerializer,
+    UserSerializer
+    
 )
 from .models import (
     User,
@@ -24,6 +26,7 @@ class RegisterViewSet(viewsets.GenericViewSet, mixins.ListModelMixin,
 
 class LoginView(ObtainAuthToken):
     authentication_classes = {}
+
 class ChangePasswordViewset(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     model = User
@@ -54,6 +57,33 @@ class ChangePasswordViewset(generics.UpdateAPIView):
             return Response(response)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EditAccountViewset(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    model = User
+    permission_class = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(instance=self.object,data=request.data)
+        serializer.is_valid()
+        serializer.save()
+        return Response(serializer.data, status=200)
+        # if serializer.is_valid():
+        #     response = {
+        #         'status': 'success',
+        #         'code': status.HTTP_200_OK,
+        #         'message': 'Account updated successfully',
+        #         'data': []
+        #     }
+
+        #     return Response(response)
+        
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)        
 class UserAccount(RegisterSerializer, RegisterViewSet): 
 
     serializer_class = RegisterSerializer
