@@ -65,10 +65,10 @@ export default function ChangePassword() {
     <div className='w-screen h-screen grid place-items-center font-font'>
       <div className='w-96 border border-gray-200 py-10 px-10 rounded-sm shadow-md'>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-        <h1 className='text-3xl font-semibold mb-2'>Settings</h1>
+        <h1 className='text-3xl font-semibold mb-2'>Password</h1>
         <p className='mb-5 text-left whitespace-pre'>
-          Change Password {" "} 
-          <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/landing")}>back</span>
+        Do you want to cancel? {" "} 
+          <span className='font-thin-600 underline cursor-pointer text-purple-800' onClick={() => navigate("/landing")}>Cancel</span>
         </p>
         <form className='flex flex-col' onSubmit={submitHandler}>  
             <label className="my-1 font-semibold text-sm" htmlFor="old_password">Old Password</label>
@@ -121,7 +121,7 @@ export default function ChangePassword() {
 
             <div>
             <button className='btn btn-block btn-default mt-5'>
-              Update
+              Save Changes
             </button>
             </div>    
         </form>
