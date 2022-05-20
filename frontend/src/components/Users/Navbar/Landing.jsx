@@ -39,6 +39,10 @@ function Landing() {
         className="btn-default rounded-md px-4 py-1 text-white" onClick={()=>navigate("/changepassword/")}>
         Change Password
         </button>
+        <button 
+        className="btn-default rounded-md px-4 py-1 text-white" onClick={()=>navigate("/account/")}>
+        Edit User Account
+        </button>
       </div>
 
 
