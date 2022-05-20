@@ -9,6 +9,7 @@ import About from "@/components/About/About";
 import ChangePassword from "@/components/settings/ChangePassword";
 import AuthContext from "@/context/AuthProvider";
 import ProtectedLogin from "@/components/Authentication/ProtectedLogin";
+import EditUser from "@/components/settings/ChangeEmal"
 
 function App() {
   const setAuth = React.useContext(AuthContext);
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/landing/" element={<Landing />} />
         <Route path="/profile/:id/" element={<UserProfile />} />
+        <Route path="/account/" element={<EditUser />} />
         <Route path="/changepassword/" element={<ChangePassword />} />
         {/* <Route path="/profile/" element={<UserProfile />} /> */}
       </Routes>
