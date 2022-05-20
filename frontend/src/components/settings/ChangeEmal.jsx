@@ -17,8 +17,8 @@ export default function EditUser() {
     setUser({ ...user, [event.target.name]: event.target.value });
     };
 
-    const submitHandler = async (e) => {
-
+    const submitHandler = async (e) => {    
+      e.preventDefault();
     try{
         const response = await axios.put(USER_URL, 
               JSON.stringify({first_name: user.first_name, last_name: user.last_name}), 
